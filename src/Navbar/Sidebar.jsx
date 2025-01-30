@@ -71,7 +71,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         marginLeft: "20px",
                     }}
                 >
-                    Qualoan
+                    Salarysaathi
                 </Typography>
             </Box>
 
@@ -272,7 +272,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 }}
                             >
                                 <Typography variant="subtitle1">
-                                    
                                     Sanction
                                 </Typography>
                             </AccordionSummary>
