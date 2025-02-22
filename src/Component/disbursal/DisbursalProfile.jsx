@@ -86,6 +86,7 @@ const DisbursalProfile = () => {
                                             disbursalData?.sanction?.application
                                                 ?.lead
                                         }
+                                        loanNo={disbursalData?.loanNo}
                                     />
                                 </Paper>
                                 <InternalDedupe

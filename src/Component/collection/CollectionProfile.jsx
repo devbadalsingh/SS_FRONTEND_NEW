@@ -72,7 +72,10 @@ const CollectionProfile = () => {
                                         borderRadius: "10px",
                                     }}
                                 >
-                                    <ApplicantProfileData leadData={lead} />
+                                    <ApplicantProfileData
+                                        leadData={lead}
+                                        loanNo={collectionData?.loanNo}
+                                    />
                                 </Paper>
                                 <InternalDedupe id={lead?._id} />
                                 <ApplicationLogHistory id={lead?._id} />

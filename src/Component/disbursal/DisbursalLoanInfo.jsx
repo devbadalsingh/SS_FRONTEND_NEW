@@ -23,7 +23,7 @@ const DisbursalLoanInfo = ({ disburse }) => {
             application,
             application: { cam, lead, lead: { fName, mName, lName } = {} } = {},
         } = {},
-    } = applicationProfile || {};
+    } = applicationProfile.disbursal || {};
 
     const [recommendLoan, { data, isSuccess, isError, error }] =
         useRecommendLoanMutation();
@@ -45,30 +45,77 @@ const DisbursalLoanInfo = ({ disburse }) => {
         recommendLoan({ id: applicationProfile._id, remarks });
     };
 
-    console.log("sanction", sanction.approvedBy);
+    console.log("sanction", sanction?.approvedBy);
 
-  const info = [
-    { label: "Loan No.", value: applicationProfile?.loanNo },
-    { label: "Customer Name", value: `${fName}${mName ? ` ${mName}` : ``} ${lName}` },
-    { label: "Processed By", value: `${application?.creditManagerId?.fName}${application?.creditManagerId?.mName ? ` ${application?.creditManagerId?.mName}` : ``} ${application?.creditManagerId?.lName}` },
-    { label: "Processed On", value: "-" },
-    { label: "Sanctioned By", value: `${sanction?.approvedBy?.fName}${sanction?.approvedBy?.mName ? ` ${sanction?.approvedBy?.mName}` : ``} ${sanction?.approvedBy?.lName}` },
-    { label: "Sanctioned On", value: sanction?.sanctionDate && formatDate(sanction?.sanctionDate) },
-    { label: "Loan Approved (Rs.)", value: cam?.details?.loanRecommended },
-    { label: "ROI % (p.d.) Approved", value: cam?.details?.roi },
-    { label: "Processing Fee", value: cam?.details?.netAdminFeeAmount },
-    { label: "Tenure", value: cam?.details?.eligibleTenure },
-    { label: "Sanctioned Email Sent On", value:sanction?.sanctionDate && formatDate(sanction?.sanctionDate) },
-    { label: "Sanctioned Email Sent To", value: lead?.personalEmail },
-    { label: "Sanctioned Email Response Status", value: "ACCEPTED" },
-    { label: "Acceptance Email", value: lead?.personalEmail },
-    ...(applicationProfile.isDisbursed ? [
-      { label: "Disbursed From", value: applicationProfile?.payableAccount },
-      { label: "Disbursed On", value: applicationProfile?.disbursedBy && formatDate(applicationProfile?.disbursedAt) },
-      { label: "Disbursed By", value: `${applicationProfile?.disbursedBy?.fName}${applicationProfile?.disbursedBy?.mName ? ` ${applicationProfile?.disbursedBy?.mName}` : ``} ${applicationProfile?.disbursedBy?.lName}` },
-      { label: "Disbursed Amount", value: applicationProfile?.amount },
-    ] : [])
-  ];
+    const info = [
+        { label: "Loan No.", value: applicationProfile?.loanNo },
+        {
+            label: "Customer Name",
+            value: `${fName}${mName ? ` ${mName}` : ``} ${lName}`,
+        },
+        {
+            label: "Processed By",
+            value: `${application?.creditManagerId?.fName}${
+                application?.creditManagerId?.mName
+                    ? ` ${application?.creditManagerId?.mName}`
+                    : ``
+            } ${application?.creditManagerId?.lName}`,
+        },
+        { label: "Processed On", value: "-" },
+        {
+            label: "Sanctioned By",
+            value: `${sanction?.approvedBy?.fName}${
+                sanction?.approvedBy?.mName
+                    ? ` ${sanction?.approvedBy?.mName}`
+                    : ``
+            } ${sanction?.approvedBy?.lName}`,
+        },
+        {
+            label: "Sanctioned On",
+            value: sanction?.sanctionDate && formatDate(sanction?.sanctionDate),
+        },
+        { label: "Loan Approved (Rs.)", value: cam?.details?.loanRecommended },
+        { label: "ROI % (p.d.) Approved", value: cam?.details?.roi },
+        { label: "Processing Fee", value: cam?.details?.netAdminFeeAmount },
+        { label: "Tenure", value: cam?.details?.eligibleTenure },
+        {
+            label: "Sanctioned Email Sent On",
+            value: sanction?.sanctionDate && formatDate(sanction?.sanctionDate),
+        },
+        { label: "Sanctioned Email Sent To", value: lead?.personalEmail },
+        { label: "Sanctioned Email Response Status", value: "ACCEPTED" },
+        { label: "Acceptance Email", value: lead?.personalEmail },
+        ...(applicationProfile.isDisbursed
+            ? [
+                  {
+                      label: "Disbursed From",
+                      value: applicationProfile?.disbursal?.payableAccount,
+                  },
+                  {
+                      label: "Disbursed On",
+                      value:
+                          applicationProfile?.disbursal?.disbursedBy &&
+                          formatDate(
+                              applicationProfile?.disbursal?.disbursedAt
+                          ),
+                  },
+                  {
+                      label: "Disbursed By",
+                      value: `${
+                          applicationProfile?.disbursal?.disbursedBy?.fName
+                      }${
+                          applicationProfile?.disbursal?.disbursedBy?.lName
+                              ? ` ${applicationProfile?.disbursal?.disbursedBy?.lName}`
+                              : ``
+                      }`,
+                  },
+                  {
+                      label: "Disbursed Amount",
+                      value: applicationProfile?.disbursal?.amount,
+                  },
+              ]
+            : []),
+    ];
 
     useEffect(() => {
         if (isSuccess && data) {

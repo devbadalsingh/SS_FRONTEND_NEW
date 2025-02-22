@@ -10,8 +10,14 @@ import {
 } from "@mui/material";
 import { formatDate } from "../utils/helper";
 
-const ApplicantProfileData = ({ leadData }) => {
+const ApplicantProfileData = ({ leadData, loanNo }) => {
+    console.log(loanNo);
     const columns = [
+        {
+            label: "Lead No.",
+            value: leadData?.leadNo,
+            ...(loanNo ? { label2: "Loan No.", value2: loanNo } : {}), // Only include loanNo if it's truthy
+        },
         {
             label: "First Name",
             value: leadData?.fName,

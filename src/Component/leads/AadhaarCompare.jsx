@@ -75,17 +75,30 @@ const AadhaarCompare = ({
 
     // Fields to be compared
     const getComparisonFields = (lead, aadhaarDetails) => {
-        const { locality, postOfficeName, dist, state, country, pincode } =
+        const { locality, postOfficeName, district, state, country, pincode } =
             aadhaarDetails;
+
+        let dist, con, pc, st, po, house, landmark;
+        if (aadhaarDetails && aadhaarDetails.address) {
+            ({
+                dist,
+                country: con,
+                pc,
+                state: st,
+                po,
+                house,
+                landmark,
+            } = aadhaarDetails.address);
+        }
 
         const formatAddress = (...parts) => parts.filter(Boolean).join(", "); // Join only non-empty values with commas
         const aadhaarAddress = formatAddress(
-            locality,
-            postOfficeName,
-            dist,
-            state,
-            country,
-            pincode
+            locality || `${house} ${landmark}`,
+            postOfficeName || po,
+            district || dist,
+            state || st,
+            country || con,
+            pincode || pc
         );
         const leadAddress = formatAddress(
             lead?.city,
@@ -102,7 +115,8 @@ const AadhaarCompare = ({
             {
                 label: "DOB",
                 leadValue: lead?.dob && formatDate(lead?.dob),
-                aadhaarValue: aadhaarDetails?.dateOfBirth,
+                aadhaarValue:
+                    aadhaarDetails?.dateOfBirth || aadhaarDetails?.dob,
             },
             {
                 label: "Gender",
@@ -112,7 +126,9 @@ const AadhaarCompare = ({
             {
                 label: "Masked Aadhaar ",
                 leadValue: `xxxxxxxx${lead?.aadhaar.slice(-4)}`,
-                aadhaarValue: aadhaarDetails?.maskAadhaarNumber,
+                aadhaarValue:
+                    aadhaarDetails?.maskAadhaarNumber ||
+                    aadhaarDetails?.maskedAdharNumber,
             },
             {
                 label: "Address ",
