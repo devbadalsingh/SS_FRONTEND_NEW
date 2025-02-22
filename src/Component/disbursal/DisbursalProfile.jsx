@@ -169,7 +169,7 @@ const DisbursalProfile = () => {
                             />
                         )}
                         {currentPage === "disbursal" && (
-                            <DisburseLoan disburse={disbursalData?.sanction} />
+                            <DisburseLoan disburse={disbursalData} />
                         )}
                     </>
                 )}

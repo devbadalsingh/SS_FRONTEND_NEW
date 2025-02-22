@@ -15,7 +15,6 @@ const DisbursalLoanInfo = ({ disburse }) => {
     const [openRemark, setOpenRemark] = useState(false);
     const navigate = useNavigate();
 
-    console.log("profile", applicationProfile);
 
     const {
         sanction,
@@ -23,7 +22,7 @@ const DisbursalLoanInfo = ({ disburse }) => {
             application,
             application: { cam, lead, lead: { fName, mName, lName } = {} } = {},
         } = {},
-    } = applicationProfile.disbursal || {};
+    } = applicationProfile || {};
 
     const [recommendLoan, { data, isSuccess, isError, error }] =
         useRecommendLoanMutation();
