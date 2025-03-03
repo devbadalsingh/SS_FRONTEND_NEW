@@ -32,7 +32,7 @@ const barButtonOptions = [
 const SanctionProfile = () => {
     const { id } = useParams();
     const { empInfo } = useAuthStore();
-    const { setApplicationProfile } = useStore();
+    const { setApplicationProfile, setLead } = useStore();
     const [previewSanction, setPreviewSanction] = useState(false);
     const [forceRender, setForceRender] = useState(false);
     const navigate = useNavigate();
@@ -59,6 +59,7 @@ const SanctionProfile = () => {
     useEffect(() => {
         if (isSuccess) {
             setApplicationProfile(data);
+            setLead(data?.application?.lead);
         }
         if (isSuccess && data?.application?.lead?.document?.length) {
             setUploadedDocs(
@@ -192,6 +193,7 @@ const SanctionProfile = () => {
                                 )}
                                 {currentPage === "verification" && (
                                     <VerifyContactDetails
+                                        leadId={data?.application.lead?._id}
                                         isAadhaarVerified={
                                             data?.application?.lead
                                                 ?.isAadhaarVerified

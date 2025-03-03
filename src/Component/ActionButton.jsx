@@ -796,7 +796,7 @@ const ActionButton = ({
                                 activeRole !== "disbursalManager" &&
                                 activeRole !== "admin" &&
                                 !isHold &&
-                                !isApproved && (
+                                !eSigned && (
                                     <Button
                                         variant="contained"
                                         color="secondary"

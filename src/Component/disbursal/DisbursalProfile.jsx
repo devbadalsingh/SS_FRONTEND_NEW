@@ -31,7 +31,7 @@ const DisbursalProfile = () => {
     const { id } = useParams();
     const [disbursalData, setDisbursalData] = useState();
     const { empInfo, activeRole } = useAuthStore();
-    const { setApplicationProfile } = useStore();
+    const { setApplicationProfile, setLead } = useStore();
     const navigate = useNavigate();
     const [uploadedDocs, setUploadedDocs] = useState([]);
     const [currentPage, setCurrentPage] = useState("application");
@@ -44,10 +44,14 @@ const DisbursalProfile = () => {
         if (isSuccess && data) {
             setDisbursalData(data?.disbursal);
             setApplicationProfile(data?.disbursal);
+            setLead(data?.disbursal?.sanction?.application?.lead);
         }
-        if (isSuccess && data?.sanction?.application?.lead?.document?.length) {
+        if (
+            isSuccess &&
+            data?.disbursal?.sanction?.application?.lead?.document?.length
+        ) {
             setUploadedDocs(
-                data?.sanction?.application?.lead?.document.map(
+                data?.disbursal?.sanction?.application?.lead?.document.map(
                     (doc) => doc.type
                 )
             );

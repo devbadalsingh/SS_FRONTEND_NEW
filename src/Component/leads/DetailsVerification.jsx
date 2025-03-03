@@ -22,6 +22,7 @@ import EmailVerification from "./OtpVerification";
 import AadhaarOtpVerification from "./AadhaarOtpVerification";
 import PanCompare from "./PanCompare";
 import Loader from "../loader";
+import useStore from "../../Store";
 import useAuthStore from "../store/authStore";
 import AadhaarCompare from "./AadhaarCompare";
 
@@ -34,6 +35,7 @@ const VerifyContactDetails = ({
 }) => {
     const { id } = useParams();
     const { activeRole } = useAuthStore();
+    const { lead } = useStore();
     const navigate = useNavigate();
     const [otp, setOtp] = useState(false);
     const [openAadhaarCompare, setOpenAadhaarCompare] = useState();
@@ -86,7 +88,7 @@ const VerifyContactDetails = ({
     };
 
     const handleAadhaarVerification = () => {
-        checkDetails(id);
+        checkDetails(lead._id);
     };
 
     useEffect(() => {

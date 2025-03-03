@@ -30,7 +30,9 @@ const AadhaarCompare = ({
 }) => {
     console.log(aadhaarDetails);
     const navigate = useNavigate();
+
     const { lead } = useStore();
+
     const [verifyAadhaar, { data, isSuccess, isError, error }] =
         useVerifyAadhaarMutation();
 
@@ -70,7 +72,10 @@ const AadhaarCompare = ({
     const getTextColor = (result) =>
         result === "Matched" ? "#00796b" : "#d32f2f";
     const handleSubmit = () => {
-        verifyAadhaar({ id: lead._id, details: aadhaarDetails });
+        verifyAadhaar({
+            id: lead._id,
+            details: aadhaarDetails,
+        });
     };
 
     // Fields to be compared
@@ -142,7 +147,7 @@ const AadhaarCompare = ({
     // Function to render table rows dynamically
     useEffect(() => {
         if (isSuccess) setOpen(false);
-        navigate(`/lead-profile/${lead._id}`);
+        // navigate(`/lead-profile/${lead._id}`);
     }, [isSuccess]);
 
     const renderRow = ({ label, leadValue, aadhaarValue }) => {
