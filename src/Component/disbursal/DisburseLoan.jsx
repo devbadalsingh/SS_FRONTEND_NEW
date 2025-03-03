@@ -34,7 +34,7 @@ const DisburseLoan = ({ disburse }) => {
   const navigate = useNavigate();
 
   const { disbursalDate, netDisbursalAmount } =
-    disburse?.application?.cam?.details;
+    disburse?.sanction?.application?.cam?.details;
   const [disburseLoan, { data, isSuccess,isLoading, isError, error }] =
     useDisburseLoanMutation();
 
